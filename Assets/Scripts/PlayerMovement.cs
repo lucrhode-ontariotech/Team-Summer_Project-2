@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     float vAxisInput;
     float hAxisInput;
 
+    private float boostTimer;
+    private bool boosting;
+
     Camera cam;
     Collider2D objCollider;
 
@@ -16,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     {
         cam = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         objCollider = GetComponent<Collider2D>();
+
+        boostTimer = 0;
+        boosting = false;
     }
 
     void Update()
@@ -44,5 +50,28 @@ public class PlayerMovement : MonoBehaviour
 
         // Rotate the player character along the Z-Axis
         this.transform.Rotate(Vector3.forward * hAxisInput * Time.deltaTime);
+
+
+         if (boosting)
+        {
+        boostTimer += Time.deltaTime;
+        if (boostTimer >= 5)
+            {
+            playerMoveSpeed = 8.0f;
+            boostTimer = 0;
+            boosting = false;
+            }
+        }
     }
+
+     void OnTriggerEnter2D(Collider2D other) 
+    {
+        if (other.tag == "SpeedBoost")
+        {
+            boosting = true;
+            playerMoveSpeed = 12f;
+            Destroy(other.gameObject);
+        }
+    }
+   
 }

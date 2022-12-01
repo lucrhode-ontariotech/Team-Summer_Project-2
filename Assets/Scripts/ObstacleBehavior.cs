@@ -10,54 +10,14 @@ public class ObstacleBehavior : MonoBehaviour
 
     Camera cam;
     ObstacleSpawner spawnerScript;
-    ObstacleVariables variableScript;
-    PlayerVariables playerVariables;
 
     void Start()
     {
         cam = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         spawnerScript = GameObject.Find("Obstacle_Spawner").GetComponent<ObstacleSpawner>();
-        variableScript = GameObject.Find("Obstacle_Spawner").GetComponent<ObstacleVariables>();
-        playerVariables = GameObject.FindWithTag("Player").GetComponent<PlayerVariables>();
     }
 
     void Update()
-    {
-        Movement();
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            PlayerCollision(collision);
-        }
-        else if (collision.gameObject.tag == "Projectile")
-        {
-            ProjectileCollision(collision);
-        }
-    }
-
-    void DestroyObject()
-    {
-        spawnerScript.numOfObstacles -= 1;
-        Destroy(gameObject);
-    }
-
-    void ProjectileCollision(Collision2D collisionObject)
-    {
-        DestroyObject();
-        Destroy(collisionObject.gameObject);
-        variableScript.numObstaclesDestroyed += 1;
-    }
-
-    void PlayerCollision(Collision2D collisionObject)
-    {
-        DestroyObject();
-        playerVariables.playerCurrentHP -= 1;
-    }
-
-    void Movement()
     {
         if (startMovement)
         {
@@ -72,7 +32,7 @@ public class ObstacleBehavior : MonoBehaviour
             // Check if object has entered the screen
             if ((objPosition.x < 1 && objPosition.x > 0) && (objPosition.y < 1 && objPosition.y > 0))
             {
-                enteredScreen = true;
+                enteredScreen= true;
             }
 
             if (enteredScreen)
@@ -88,10 +48,16 @@ public class ObstacleBehavior : MonoBehaviour
                 }
             }
 
-            if (!enteredScreen && timeAlive > 0.75f)
+            if(!enteredScreen && timeAlive > 1f)
             {
                 DestroyObject();
             }
         }
+    }
+
+    void DestroyObject()
+    {
+        spawnerScript.numOfObstacles -= 1;
+        Destroy(gameObject);
     }
 }
