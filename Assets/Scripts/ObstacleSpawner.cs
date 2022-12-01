@@ -32,32 +32,34 @@ public class ObstacleSpawner : MonoBehaviour
 
         // Convert Viewport units to World units
         Vector3 randomWorldPoint = cam.ViewportToWorldPoint(randomScreenPoint);
+        randomWorldPoint.z = 0f;
 
         float diceRollX = Random.value;
         float diceRollY = Random.value;
-        float randX = 0;
-        float randY = 0;
+        float randX = 0f;
+        float randY = 0f;
+        float rotateAngle = 0f;
 
         // Randomly decide if the X value of spawn coordinates should be positive or negative
         // Must be outside of screen area
         if (diceRollX < 0.5f)
         {
-            randX = Random.Range(-0.2f, 0);
+            randX = Random.Range(-0.15f, 0);
         }
         else
         {
-            randX = Random.Range(1, 1.2f);
+            randX = Random.Range(1, 1.15f);
         }
 
         // Randomly decide if the Y value of spawn coordinates should be positive or negative
         // Must be outside of screen area
         if (diceRollY < 0.5f)
         {
-            randY = Random.Range(-0.2f, 0);
+            randY = Random.Range(-0.15f, 0);
         }
         else
         {
-            randY = Random.Range(1, 1.2f);
+            randY = Random.Range(1, 1.15f);
         }
 
         // Set a vector position based on randomly selected value (in Viewport units)
@@ -65,15 +67,30 @@ public class ObstacleSpawner : MonoBehaviour
 
         // Convert to World units
         Vector3 worldSpawnPoint = cam.ViewportToWorldPoint(screenSpawnPoint);
+        worldSpawnPoint.z = 0f;
 
-        // Set a Quaternion rotation to face the object in the direction of the screen point
-        Quaternion cloneRotation = Quaternion.LookRotation(randomWorldPoint, Vector3.forward);
+        if (randX < 0)
+        {
+            rotateAngle = -1 * (Vector2.Angle(worldSpawnPoint, randomWorldPoint));
+        }
+        else
+        {
+            rotateAngle = Vector2.Angle(worldSpawnPoint, randomWorldPoint);
+        }
+
+        /*
+         * AT THIS POINT THEY SHOULD BE FACING THE CORRECT WAY
+         * WHY ARE THEY NOT FACING THE RIGHT DIRECTION
+         * AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        */
+
+        Quaternion angleQuat = Quaternion.Euler(0f, 0f, rotateAngle);
 
         // Create a new Obstacle_Template clone object
         // With the given spawn point
         // And rotation facing towards the screen space
         GameObject clone;
-        clone = Instantiate(obstacleObj, worldSpawnPoint, cloneRotation);
+        clone = Instantiate(obstacleObj, worldSpawnPoint, angleQuat);
 
         // Access ObstacleBehavior script attached to the new clone object
         // Set startMovement flag to TRUE - triggers object to move
