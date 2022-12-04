@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     GameObject projectileObject;
+    AudioSource audioS;
 
     void Start()
     {
         projectileObject = GameObject.Find("Projectile_Template");
+        audioS = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -26,6 +28,7 @@ public class PlayerShoot : MonoBehaviour
             // Set startMovement flag to TRUE - triggers object to move
             ProjectileBehavior cloneScript = clone.GetComponent<ProjectileBehavior>();
             cloneScript.startMovement = true;
+            audioS.Play();
         }
     }
 }

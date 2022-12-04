@@ -20,7 +20,7 @@ public class ScoreUpdate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int score = (obsScript.numObstaclesDestroyed) * 500;
+        int score = (obsScript.numObstaclesDestroyed) * 100;
         tmp.text = "SCORE: " + score.ToString();
     }
 }

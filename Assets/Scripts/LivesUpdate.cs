@@ -17,12 +17,14 @@ public class LivesUpdate : MonoBehaviour
 
     PlayerVariables player;
     SpriteRenderer sR;
+    AudioSource audioS;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerVariables>();
         sR = GetComponent<SpriteRenderer>();
+        audioS = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -53,6 +55,7 @@ public class LivesUpdate : MonoBehaviour
 
     IEnumerator looseHeart()
     {
+        audioS.Play();
         sR.sprite = brokenHeart;
         yield return new WaitForSecondsRealtime(0.3f);
         sR.sprite = lostHeart;

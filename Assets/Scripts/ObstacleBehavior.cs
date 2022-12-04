@@ -12,6 +12,7 @@ public class ObstacleBehavior : MonoBehaviour
     ObstacleSpawner spawnerScript;
     ObstacleVariables variableScript;
     PlayerVariables playerVariables;
+    AudioSource audioSource;
     GameObject healthItem;
     GameObject safeItem;
 
@@ -21,6 +22,7 @@ public class ObstacleBehavior : MonoBehaviour
         spawnerScript = GameObject.Find("Obstacle_Spawner").GetComponent<ObstacleSpawner>();
         variableScript = GameObject.Find("Obstacle_Spawner").GetComponent<ObstacleVariables>();
         playerVariables = GameObject.FindWithTag("Player").GetComponent<PlayerVariables>();
+        audioSource = GetComponent<AudioSource>();
         healthItem = GameObject.Find("Health_Item");
         safeItem = GameObject.Find("Safe_Item");
     }
@@ -61,8 +63,7 @@ public class ObstacleBehavior : MonoBehaviour
         // - Destroy the colliding object
         // - Update number of objects destroyed by player
 
-        DestroyObject();
-        Destroy(collisionObject.gameObject);
+        audioSource.Play();
         variableScript.numObstaclesDestroyed += 1;
         if ((variableScript.numObstaclesDestroyed % 2 == 0) && (playerVariables.playerCurrentHP < playerVariables.playerMaxHP))
         {
@@ -75,6 +76,8 @@ public class ObstacleBehavior : MonoBehaviour
                 Instantiate(safeItem, this.transform.position, this.transform.rotation);
             }
         }
+        DestroyObject();
+        Destroy(collisionObject.gameObject);
     }
 
     void PlayerCollision(Collision2D collisionObject)
