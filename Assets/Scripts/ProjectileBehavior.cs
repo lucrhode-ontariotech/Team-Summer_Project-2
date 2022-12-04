@@ -19,7 +19,7 @@ public class ProjectileBehavior : MonoBehaviour
             // Starts object movement
             this.transform.Translate(Vector2.up * 12.0f * Time.deltaTime);
 
-            // Find current object position to screen space coordinates
+            // Find current object position, converted to screen space coordinates
             Vector3 projectilePosition = cam.WorldToViewportPoint(this.transform.position);
 
             {

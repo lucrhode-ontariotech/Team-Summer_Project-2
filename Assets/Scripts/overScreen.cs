@@ -5,15 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class overScreen : MonoBehaviour
 {
+    // Triggers game-over screen if player HP falls to 0
+
     PlayerVariables playerScript;
 
-    // Start is called before the first frame update
     void Start()
     {
         playerScript = GameObject.FindWithTag("Player").GetComponent<PlayerVariables>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playerScript.playerCurrentHP < 1)

@@ -8,7 +8,7 @@ public class ObstacleSpawner : MonoBehaviour
     Camera cam;
 
     public int numOfObstacles = 0;
-    public int maxObstacles = 10;
+    public int maxObstacles = 0;
 
     void Start()
     {
@@ -18,7 +18,9 @@ public class ObstacleSpawner : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (numOfObstacles< maxObstacles)
+        // Constantly checks wether the current number of active spawned objects is less than allowed maximum
+        // Spawns new objects and updates the number whenever the current value falls below the maximum value
+        if (numOfObstacles < maxObstacles)
         {
             spawnObject();
             numOfObstacles ++;
@@ -78,11 +80,8 @@ public class ObstacleSpawner : MonoBehaviour
             rotateAngle = Vector2.Angle(worldSpawnPoint, randomWorldPoint);
         }
 
-        /*
-         * AT THIS POINT THEY SHOULD BE FACING THE CORRECT WAY
-         * WHY ARE THEY NOT FACING THE RIGHT DIRECTION
-         * AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        */
+        /* At this stage objects should have a rotation facing towards the screen.
+        For unknown reasons objects may not always have correct rotation */
 
         Quaternion angleQuat = Quaternion.Euler(0f, 0f, rotateAngle);
 

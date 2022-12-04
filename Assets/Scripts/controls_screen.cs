@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class controls_screen : MonoBehaviour
 {
+    // Load Controls_Screen scene when button is clicked
     public void onButtonPress()
     {
         LoadScene("Controls_Screen");

@@ -5,6 +5,8 @@ using TMPro;
 
 public class ScoreUpdate : MonoBehaviour
 {
+    // Update the screen to display current player score
+
     ObstacleVariables obsScript;
     TextMeshProUGUI tmp;
 
